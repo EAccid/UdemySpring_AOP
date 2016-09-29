@@ -1,39 +1,49 @@
 package com.eaccid.spring.aop;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class Logger {
 
-    @Pointcut("execution(void com.eaccid.spring.aop.Camera.snap(..))")
+    @Pointcut("execution(* com.eaccid.spring.aop.Camera.snap())")
     public void cameraSnap() {
     }
 
-    @Pointcut("execution(* com.eaccid.spring.aop.Camera.snap(String))")
-    public void cameraSnapName() {
+
+    @Before("cameraSnap()")
+    public void beforeAdvice() {
+        System.out.println("Before advice...");
     }
 
-    @Pointcut("execution(* *.*(..))") //any returned type, any package, any class name, any arg[]
-    public void cameraDoesSmth() {
+    @After("cameraSnap()")
+    public void afterAdvice() {
+        System.out.println("After advice...");
     }
 
-    @Before("cameraSnap()") //method is called "advice"
-    public void aboutToTakePhoto() {
-        System.out.println("About to take photo...");
+    @AfterReturning("cameraSnap()") //if method without thrown exceptions
+    public void afterReturningAdvice() {
+        System.out.println("After returning advice...");
     }
 
-    @Before("cameraSnapName()") //method is called "advice"
-    public void aboutToTakePhotoWithName() {
-        System.out.println("About to take photo with name...");
+    @AfterThrowing("cameraSnap()") //if method without thrown exceptions
+    public void afterThrowingAdvice() {
+        System.out.println("After throwing advice...");
     }
 
-    @Before("cameraDoesSmth()") //method is called "advice"
-    public void aboutToCameraDoesSmth() {
-        System.out.println("About to camera does smth...");
+    @Around("cameraSnap()") //if method without thrown exceptions
+    public void aroundAdvice(ProceedingJoinPoint p) {
+        System.out.println("Around advice (before)...");
+
+        try {
+            p.proceed();
+        } catch (Throwable e) {
+            System.out.println("In around advice: " + e.getMessage());
+        }
+
+        System.out.println("Around advice (after)...");
     }
 
 }
