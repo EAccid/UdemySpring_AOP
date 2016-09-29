@@ -2,12 +2,16 @@ package com.eaccid.spring.aop;
 
 import org.springframework.stereotype.Component;
 
-@Component
-public class Camera {
+@Component("camera")
+public class Camera implements PhotoSnapper, Machine{
+
+    public Camera() {
+        System.out.println("Hello from camera constructor");
+    }
 
     public void snap() throws Exception{
         System.out.println("SNAP!");
-        throw new Exception("bye bye!");
+//        throw new Exception("bye bye!");
     }
 
     public void snap(int exposure) {

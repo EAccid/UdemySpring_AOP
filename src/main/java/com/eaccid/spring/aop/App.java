@@ -8,6 +8,10 @@ public class App {
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
+        Object obj = context.getBean("camera");
+        System.out.println("Class of camera bean: " + obj.getClass());
+        System.out.println(obj instanceof Camera);
+
         Camera camera = (Camera) context.getBean("camera");
 
         try {
