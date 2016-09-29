@@ -1,4 +1,11 @@
 package com.eaccid.spring.aop;
 
-public interface Machine {
+public class Machine implements IMachine {
+
+    @Override
+    public void start() {
+        System.out.println("Machine starting ...");
+    }
+
 }
+

@@ -8,19 +8,15 @@ public class App {
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
-        Object obj = context.getBean("camera");
-        System.out.println("Class of camera bean: " + obj.getClass());
-        System.out.println(obj instanceof Camera);
+        IBlender blender = (IBlender)context.getBean("blender");
+        blender.blend();
 
-        Camera camera = (Camera) context.getBean("camera");
+        ((IMachine)blender).start();
 
-        try {
-            camera.snap();
-        } catch (Exception e) {
-            System.out.println("Cought exception " + e.getMessage());
-        }
+        IFan fan = (IFan)context.getBean("fan");
+        fan.activate(5);
 
-        context.close();
+        ((IMachine)fan).start();
 
     }
 }

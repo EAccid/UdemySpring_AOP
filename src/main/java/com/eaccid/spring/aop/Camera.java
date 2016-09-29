@@ -3,7 +3,7 @@ package com.eaccid.spring.aop;
 import org.springframework.stereotype.Component;
 
 @Component("camera")
-public class Camera implements PhotoSnapper, Machine{
+public class Camera implements PhotoSnapper{
 
     public Camera() {
         System.out.println("Hello from camera constructor");
